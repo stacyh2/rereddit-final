@@ -12,6 +12,14 @@ app.config(['$stateProvider','$urlRouterProvider', function($stateProvider, $url
         }]
       }
     })
+
+    .state('users', {
+      url: '/users',
+      templateUrl: '/templates/user.html',
+      controller: 'NavCtrl'
+      
+      
+    })
     .state('post', {
       url: '/posts/:id',
       templateUrl: '/templates/posts.html',

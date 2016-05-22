@@ -1,6 +1,9 @@
 app.factory('auth', ['$http', '$window', function($http, $window){
    var auth = {};
 
+   auth.users=[];
+
+
    auth.saveToken = function (token) {
      $window.localStorage['rereddit-jwt'] = token;
    };
@@ -20,6 +23,16 @@ app.factory('auth', ['$http', '$window', function($http, $window){
        return false;
      }
    };
+   auth.getAll= function() {
+
+      return $http.get('/users').then(function(data) {
+        console.log("hey");
+  
+        angular.copy(data.data, auth.users);
+
+        console.log(auth.users);
+      });
+    }
 
    auth.currentUser = function(){
      if(auth.isLoggedIn()){

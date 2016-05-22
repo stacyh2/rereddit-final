@@ -53,6 +53,14 @@ router.get('/posts', function(req, res, next) {
   });
 });
 
+router.get('/users', function(req, res, next) {
+  User.find(function(err, users){
+    if(err){ return next(err); }
+
+    res.json(users);
+  });
+});
+
 router.post('/posts', auth, function(req, res, next) {
   var post = new Post(req.body);
 
@@ -77,6 +85,18 @@ router.param('post', function(req, res, next, id) {
   });
 });
 
+router.param('user', function(req, res, next, id) {
+  var query = User.findById(id);
+
+  query.exec(function (err, user){
+    if (err) { return next(err); }
+    if (!user) { return next(new Error('can\'t find post')); }
+
+    req.user = user;
+    return next();
+  });
+});
+
 router.param('comment', function(req, res, next, id) {
   var query = Comment.findById(id);
 
@@ -90,6 +110,22 @@ router.param('comment', function(req, res, next, id) {
 });
 
 router.post('/posts/:post/comments', function(req, res, next) {
+  var comment = new Comment(req.body);
+  comment.post = req.post;
+
+  comment.save(function(err, comment){
+    if(err){ return next(err); }
+
+    req.post.comments.push(comment);
+    req.post.save(function(err, post) {
+      if(err){ return next(err); }
+
+      res.json(comment);
+    });
+  });
+});
+
+router.post('/users/:user/friends', function(req, res, next) {
   var comment = new Comment(req.body);
   comment.post = req.post;
 

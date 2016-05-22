@@ -23,5 +23,17 @@
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
     "serve-favicon": "~2.3.0"
-  }
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stacyh2/rereddit-final.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stacyh2/rereddit-final/issues"
+  },
+  "homepage": "https://github.com/stacyh2/rereddit-final#readme",
+  "description": ""
 }
